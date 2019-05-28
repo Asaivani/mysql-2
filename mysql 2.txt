@@ -1,0 +1,1002 @@
+Microsoft Windows [Version 10.0.17763.503]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\xampp\mysql>dir
+ Volume in drive C has no label.
+ Volume Serial Number is 0A2F-2202
+
+ Directory of C:\xampp\mysql
+
+05/22/2019  05:16 PM    <DIR>          .
+05/22/2019  05:16 PM    <DIR>          ..
+05/22/2019  05:16 PM    <DIR>          backup
+05/22/2019  05:19 PM    <DIR>          bin
+05/08/2019  02:19 AM            17,987 COPYING
+05/08/2019  02:19 AM            86,263 COPYING.thirdparty
+05/08/2019  02:19 AM             2,354 CREDITS
+05/28/2019  09:08 AM    <DIR>          data
+05/08/2019  02:19 AM             8,245 EXCEPTIONS-CLIENT
+05/08/2019  04:06 AM             5,057 my-huge.ini
+05/08/2019  04:06 AM            20,909 my-innodb-heavy-4G.ini
+05/08/2019  04:06 AM             5,044 my-large.ini
+05/08/2019  04:06 AM             5,055 my-medium.ini
+05/08/2019  04:06 AM             2,921 my-small.ini
+03/30/2013  05:59 PM               848 mysql_installservice.bat
+03/30/2013  05:59 PM               395 mysql_uninstallservice.bat
+05/08/2019  02:19 AM             2,196 README
+03/30/2013  05:59 PM             1,105 resetroot.bat
+05/22/2019  05:16 PM    <DIR>          scripts
+05/22/2019  05:16 PM    <DIR>          share
+              13 File(s)        158,379 bytes
+               7 Dir(s)  160,654,991,360 bytes free
+
+C:\xampp\mysql>cd bin
+
+C:\xampp\mysql\bin>mysql
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 16
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> exit
+Bye
+
+C:\xampp\mysql\bin>mysql -u root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 17
+Server version: 10.1.40-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> use table;
+Database changed
+MariaDB [table]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+16 rows in set (0.04 sec)
+
+MariaDB [table]> select substr(title,1,10) as short_title,concat(author_lname,',',author_fname) as author,concat(stock_quantity,'in stock') as quantity from books where released_year=2001;
++-------------+-------------+-------------+
+| short_title | author      | quantity    |
++-------------+-------------+-------------+
+| American G  | Gaiman,Neil | 12in stock  |
+| A Heartbre  | Eggers,Dave | 104in stock |
++-------------+-------------+-------------+
+2 rows in set (0.00 sec)
+
+MariaDB [table]> INSERT INTO books
+    ->     (title, author_fname, author_lname, released_year, stock_quantity, pages)
+    ->     VALUES ('10% Happier', 'Dan', 'Harris', 2014, 29, 256),
+    ->            ('fake_book', 'Freida', 'Harris', 2001, 287, 428),
+    ->            ('Lincoln In The Bardo', 'George', 'Saunders', 2017, 1000, 367);
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+MariaDB [table]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                                         | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                           | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                                | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select distinct author_lname from books;
++----------------+
+| author_lname   |
++----------------+
+| Lahiri         |
+| Gaiman         |
+| Eggers         |
+| Chabon         |
+| Smith          |
+| Carver         |
+| DeLillo        |
+| Steinbeck      |
+| Foster Wallace |
+| Harris         |
+| Saunders       |
++----------------+
+11 rows in set (0.00 sec)
+
+MariaDB [table]> select distinct author_fname from books;
++--------------+
+| author_fname |
++--------------+
+| Jhumpa       |
+| Neil         |
+| Dave         |
+| Michael      |
+| Patti        |
+| Raymond      |
+| Don          |
+| John         |
+| David        |
+| Dan          |
+| Freida       |
+| George       |
++--------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select author_lname from books order by author_lname;
++----------------+
+| author_lname   |
++----------------+
+| Carver         |
+| Carver         |
+| Chabon         |
+| DeLillo        |
+| Eggers         |
+| Eggers         |
+| Eggers         |
+| Foster Wallace |
+| Foster Wallace |
+| Gaiman         |
+| Gaiman         |
+| Gaiman         |
+| Harris         |
+| Harris         |
+| Lahiri         |
+| Lahiri         |
+| Saunders       |
+| Smith          |
+| Steinbeck      |
++----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select author_lname from books order by author_lname desc;
++----------------+
+| author_lname   |
++----------------+
+| Steinbeck      |
+| Smith          |
+| Saunders       |
+| Lahiri         |
+| Lahiri         |
+| Harris         |
+| Harris         |
+| Gaiman         |
+| Gaiman         |
+| Gaiman         |
+| Foster Wallace |
+| Foster Wallace |
+| Eggers         |
+| Eggers         |
+| Eggers         |
+| DeLillo        |
+| Chabon         |
+| Carver         |
+| Carver         |
++----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select released_year from books order by released_year;
++---------------+
+| released_year |
++---------------+
+|          1945 |
+|          1981 |
+|          1985 |
+|          1989 |
+|          1996 |
+|          2000 |
+|          2001 |
+|          2001 |
+|          2001 |
+|          2003 |
+|          2003 |
+|          2004 |
+|          2005 |
+|          2010 |
+|          2012 |
+|          2013 |
+|          2014 |
+|          2016 |
+|          2017 |
++---------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select title,author_fname,author_lname from books order by 2;
++-----------------------------------------------------+--------------+----------------+
+| title                                               | author_fname | author_lname   |
++-----------------------------------------------------+--------------+----------------+
+| 10% Happier                                         | Dan          | Harris         |
+| A Hologram for the King: A Novel                    | Dave         | Eggers         |
+| The Circle                                          | Dave         | Eggers         |
+| A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |
+| Consider the Lobster                                | David        | Foster Wallace |
+| Oblivion: Stories                                   | David        | Foster Wallace |
+| White Noise                                         | Don          | DeLillo        |
+| fake_book                                           | Freida       | Harris         |
+| Lincoln In The Bardo                                | George       | Saunders       |
+| The Namesake                                        | Jhumpa       | Lahiri         |
+| Interpreter of Maladies                             | Jhumpa       | Lahiri         |
+| Cannery Row                                         | John         | Steinbeck      |
+| The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |
+| American Gods                                       | Neil         | Gaiman         |
+| Norse Mythology                                     | Neil         | Gaiman         |
+| Coraline                                            | Neil         | Gaiman         |
+| Just Kids                                           | Patti        | Smith          |
+| What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |
+| Where I'm Calling From: Selected Stories            | Raymond      | Carver         |
++-----------------------------------------------------+--------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select title,author_fname,author_lname from books order by2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'by2' at line 1
+MariaDB [table]> select ,author_fname,author_lname from books order by author_lname,author_fname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'author_fname,author_lname from books order by author_lname,author_fname' at line 1
+MariaDB [table]> select author_fname,author_lname from books order by author_lname,author_fname;
++--------------+----------------+
+| author_fname | author_lname   |
++--------------+----------------+
+| Raymond      | Carver         |
+| Raymond      | Carver         |
+| Michael      | Chabon         |
+| Don          | DeLillo        |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| Dave         | Eggers         |
+| David        | Foster Wallace |
+| David        | Foster Wallace |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Neil         | Gaiman         |
+| Dan          | Harris         |
+| Freida       | Harris         |
+| Jhumpa       | Lahiri         |
+| Jhumpa       | Lahiri         |
+| George       | Saunders       |
+| Patti        | Smith          |
+| John         | Steinbeck      |
++--------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select title,released_year from books order by released_year desc limit 5;
++----------------------------------+---------------+
+| title                            | released_year |
++----------------------------------+---------------+
+| Lincoln In The Bardo             |          2017 |
+| Norse Mythology                  |          2016 |
+| 10% Happier                      |          2014 |
+| The Circle                       |          2013 |
+| A Hologram for the King: A Novel |          2012 |
++----------------------------------+---------------+
+5 rows in set (0.00 sec)
+
+MariaDB [table]> select title,released_year from books order by released_year desc limit 0,5;
++----------------------------------+---------------+
+| title                            | released_year |
++----------------------------------+---------------+
+| Lincoln In The Bardo             |          2017 |
+| Norse Mythology                  |          2016 |
+| 10% Happier                      |          2014 |
+| The Circle                       |          2013 |
+| A Hologram for the King: A Novel |          2012 |
++----------------------------------+---------------+
+5 rows in set (0.00 sec)
+
+MariaDB [table]> select title,released_year from books order by released_year desc limit 5,7;
++-------------------------------------------+---------------+
+| title                                     | released_year |
++-------------------------------------------+---------------+
+| Just Kids                                 |          2010 |
+| Consider the Lobster                      |          2005 |
+| Oblivion: Stories                         |          2004 |
+| Coraline                                  |          2003 |
+| The Namesake                              |          2003 |
+| fake_book                                 |          2001 |
+| A Heartbreaking Work of Staggering Genius |          2001 |
++-------------------------------------------+---------------+
+7 rows in set (0.00 sec)
+
+MariaDB [table]> SELECT * FROM tbl LIMIT 95,18446744073709551615;
+ERROR 1146 (42S02): Table 'table.tbl' doesn't exist
+MariaDB [table]> select * from books where author_fname like '%da%';
++---------+-------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                     | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       5 | A Hologram for the King: A Novel          | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                | Dave         | Eggers         |          2013 |             26 |   504 |
+|       9 | A Heartbreaking Work of Staggering Genius | Dave         | Eggers         |          2001 |            104 |   437 |
+|      15 | Oblivion: Stories                         | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                      | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                               | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                 | Freida       | Harris         |          2001 |            287 |   428 |
++---------+-------------------------------------------+--------------+----------------+---------------+----------------+-------+
+7 rows in set (0.00 sec)
+
+MariaDB [table]> select author_fname from books where author_fname like '%da%';
++--------------+
+| author_fname |
++--------------+
+| Dave         |
+| Dave         |
+| Dave         |
+| David        |
+| David        |
+| Dan          |
+| Freida       |
++--------------+
+7 rows in set (0.00 sec)
+
+MariaDB [table]> select author_fname from books where author_fname like 'da%';
++--------------+
+| author_fname |
++--------------+
+| Dave         |
+| Dave         |
+| Dave         |
+| David        |
+| David        |
+| Dan          |
++--------------+
+6 rows in set (0.00 sec)
+
+MariaDB [table]> select stock_quantity from books where stock_quantity like '_';
+Empty set (0.00 sec)
+
+MariaDB [table]> select stock_quantity from books where stock_quantity like '____';
++----------------+
+| stock_quantity |
++----------------+
+|           1000 |
++----------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select title from books where title like '%\%%';
++-------------+
+| title       |
++-------------+
+| 10% Happier |
++-------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select title from books where title like '%stories%';
++-----------------------------------------------------+
+| title                                               |
++-----------------------------------------------------+
+| What We Talk About When We Talk About Love: Stories |
+| Where I'm Calling From: Selected Stories            |
+| Oblivion: Stories                                   |
++-----------------------------------------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [table]> select title,pages from books order by pages desc limit 1;
++-------------------------------------------+-------+
+| title                                     | pages |
++-------------------------------------------+-------+
+| The Amazing Adventures of Kavalier & Clay |   634 |
++-------------------------------------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select title,released_year as summary from books order by released_year desc limit 3;
++----------------------+---------+
+| title                | summary |
++----------------------+---------+
+| Lincoln In The Bardo |    2017 |
+| Norse Mythology      |    2016 |
+| 10% Happier          |    2014 |
++----------------------+---------+
+3 rows in set (0.00 sec)
+
+MariaDB [table]> select title,released_year from books as summary order by released_year desc limit 3;
++----------------------+---------------+
+| title                | released_year |
++----------------------+---------------+
+| Lincoln In The Bardo |          2017 |
+| Norse Mythology      |          2016 |
+| 10% Happier          |          2014 |
++----------------------+---------------+
+3 rows in set (0.00 sec)
+
+MariaDB [table]> select concat(title,' - ',released_year) as summary from books order by released_year desc limit 3;
++-----------------------------+
+| summary                     |
++-----------------------------+
+| Lincoln In The Bardo - 2017 |
+| Norse Mythology - 2016      |
+| 10% Happier - 2014          |
++-----------------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [table]> select title from books where author_lname like '% %';
++----------------------+
+| title                |
++----------------------+
+| Oblivion: Stories    |
+| Consider the Lobster |
++----------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [table]> select title,author_lname from books where author_lname like '% %';
++----------------------+----------------+
+| title                | author_lname   |
++----------------------+----------------+
+| Oblivion: Stories    | Foster Wallace |
+| Consider the Lobster | Foster Wallace |
++----------------------+----------------+
+2 rows in set (0.00 sec)
+
+MariaDB [table]> select title,released_year,stock_quantity from books order by released_year limit 3;
++-----------------------------------------------------+---------------+----------------+
+| title                                               | released_year | stock_quantity |
++-----------------------------------------------------+---------------+----------------+
+| Cannery Row                                         |          1945 |             95 |
+| What We Talk About When We Talk About Love: Stories |          1981 |             23 |
+| White Noise                                         |          1985 |             49 |
++-----------------------------------------------------+---------------+----------------+
+3 rows in set (0.00 sec)
+
+MariaDB [table]> select title,released_year,stock_quantity from books order by stock_quantity limit 3;
++-----------------------------------------------------+---------------+----------------+
+| title                                               | released_year | stock_quantity |
++-----------------------------------------------------+---------------+----------------+
+| Where I'm Calling From: Selected Stories            |          1989 |             12 |
+| American Gods                                       |          2001 |             12 |
+| What We Talk About When We Talk About Love: Stories |          1981 |             23 |
++-----------------------------------------------------+---------------+----------------+
+3 rows in set (0.00 sec)
+
+MariaDB [table]> select title,author_lname from books order by author_lname;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| Where I'm Calling From: Selected Stories            | Carver         |
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| White Noise                                         | DeLillo        |
+| A Hologram for the King: A Novel                    | Eggers         |
+| The Circle                                          | Eggers         |
+| A Heartbreaking Work of Staggering Genius           | Eggers         |
+| Oblivion: Stories                                   | Foster Wallace |
+| Consider the Lobster                                | Foster Wallace |
+| Coraline                                            | Gaiman         |
+| American Gods                                       | Gaiman         |
+| Norse Mythology                                     | Gaiman         |
+| fake_book                                           | Harris         |
+| 10% Happier                                         | Harris         |
+| The Namesake                                        | Lahiri         |
+| Interpreter of Maladies                             | Lahiri         |
+| Lincoln In The Bardo                                | Saunders       |
+| Just Kids                                           | Smith          |
+| Cannery Row                                         | Steinbeck      |
++-----------------------------------------------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select title,author_lname from books order by title;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| 10% Happier                                         | Harris         |
+| A Heartbreaking Work of Staggering Genius           | Eggers         |
+| A Hologram for the King: A Novel                    | Eggers         |
+| American Gods                                       | Gaiman         |
+| Cannery Row                                         | Steinbeck      |
+| Consider the Lobster                                | Foster Wallace |
+| Coraline                                            | Gaiman         |
+| fake_book                                           | Harris         |
+| Interpreter of Maladies                             | Lahiri         |
+| Just Kids                                           | Smith          |
+| Lincoln In The Bardo                                | Saunders       |
+| Norse Mythology                                     | Gaiman         |
+| Oblivion: Stories                                   | Foster Wallace |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| The Circle                                          | Eggers         |
+| The Namesake                                        | Lahiri         |
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| Where I'm Calling From: Selected Stories            | Carver         |
+| White Noise                                         | DeLillo        |
++-----------------------------------------------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select concat('MY FAVOURITE AUTHOR IS ',upper(author_fname),' ',upper(author_lname),'!') as yell from books order by author_lname;
++----------------------------------------------+
+| yell                                         |
++----------------------------------------------+
+| MY FAVOURITE AUTHOR IS RAYMOND CARVER!       |
+| MY FAVOURITE AUTHOR IS RAYMOND CARVER!       |
+| MY FAVOURITE AUTHOR IS MICHAEL CHABON!       |
+| MY FAVOURITE AUTHOR IS DON DELILLO!          |
+| MY FAVOURITE AUTHOR IS DAVE EGGERS!          |
+| MY FAVOURITE AUTHOR IS DAVE EGGERS!          |
+| MY FAVOURITE AUTHOR IS DAVE EGGERS!          |
+| MY FAVOURITE AUTHOR IS DAVID FOSTER WALLACE! |
+| MY FAVOURITE AUTHOR IS DAVID FOSTER WALLACE! |
+| MY FAVOURITE AUTHOR IS NEIL GAIMAN!          |
+| MY FAVOURITE AUTHOR IS NEIL GAIMAN!          |
+| MY FAVOURITE AUTHOR IS NEIL GAIMAN!          |
+| MY FAVOURITE AUTHOR IS FREIDA HARRIS!        |
+| MY FAVOURITE AUTHOR IS DAN HARRIS!           |
+| MY FAVOURITE AUTHOR IS JHUMPA LAHIRI!        |
+| MY FAVOURITE AUTHOR IS JHUMPA LAHIRI!        |
+| MY FAVOURITE AUTHOR IS GEORGE SAUNDERS!      |
+| MY FAVOURITE AUTHOR IS PATTI SMITH!          |
+| MY FAVOURITE AUTHOR IS JOHN STEINBECK!       |
++----------------------------------------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select count(*) from books;
++----------+
+| count(*) |
++----------+
+|       19 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select count(author_fname) from books;
++---------------------+
+| count(author_fname) |
++---------------------+
+|                  19 |
++---------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select count(distinct author_fname) from books;
++------------------------------+
+| count(distinct author_fname) |
++------------------------------+
+|                           12 |
++------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select count(distinct author_lname) from books;
++------------------------------+
+| count(distinct author_lname) |
++------------------------------+
+|                           11 |
++------------------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select count(*) from books where title like '%the%';
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select title,author_lname from books;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| The Namesake                                        | Lahiri         |
+| Norse Mythology                                     | Gaiman         |
+| American Gods                                       | Gaiman         |
+| Interpreter of Maladies                             | Lahiri         |
+| A Hologram for the King: A Novel                    | Eggers         |
+| The Circle                                          | Eggers         |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| Just Kids                                           | Smith          |
+| A Heartbreaking Work of Staggering Genius           | Eggers         |
+| Coraline                                            | Gaiman         |
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| Where I'm Calling From: Selected Stories            | Carver         |
+| White Noise                                         | DeLillo        |
+| Cannery Row                                         | Steinbeck      |
+| Oblivion: Stories                                   | Foster Wallace |
+| Consider the Lobster                                | Foster Wallace |
+| 10% Happier                                         | Harris         |
+| fake_book                                           | Harris         |
+| Lincoln In The Bardo                                | Saunders       |
++-----------------------------------------------------+----------------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select title,author_lname from books group by author_lname;
++-----------------------------------------------------+----------------+
+| title                                               | author_lname   |
++-----------------------------------------------------+----------------+
+| What We Talk About When We Talk About Love: Stories | Carver         |
+| The Amazing Adventures of Kavalier & Clay           | Chabon         |
+| White Noise                                         | DeLillo        |
+| A Hologram for the King: A Novel                    | Eggers         |
+| Oblivion: Stories                                   | Foster Wallace |
+| Norse Mythology                                     | Gaiman         |
+| 10% Happier                                         | Harris         |
+| The Namesake                                        | Lahiri         |
+| Lincoln In The Bardo                                | Saunders       |
+| Just Kids                                           | Smith          |
+| Cannery Row                                         | Steinbeck      |
++-----------------------------------------------------+----------------+
+11 rows in set (0.00 sec)
+
+MariaDB [table]> select author_lname,count(*) from books group by author_lname;
++----------------+----------+
+| author_lname   | count(*) |
++----------------+----------+
+| Carver         |        2 |
+| Chabon         |        1 |
+| DeLillo        |        1 |
+| Eggers         |        3 |
+| Foster Wallace |        2 |
+| Gaiman         |        3 |
+| Harris         |        2 |
+| Lahiri         |        2 |
+| Saunders       |        1 |
+| Smith          |        1 |
+| Steinbeck      |        1 |
++----------------+----------+
+11 rows in set (0.00 sec)
+
+MariaDB [table]> select min(released_year) from books;
++--------------------+
+| min(released_year) |
++--------------------+
+|               1945 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select max(pages) from books;
++------------+
+| max(pages) |
++------------+
+|        634 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select max(pages),title from books;
++------------+--------------+
+| max(pages) | title        |
++------------+--------------+
+|        634 | The Namesake |
++------------+--------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select * from books where pages=(select min(pages) from books);
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver       |          1981 |             23 |   176 |
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select * from books order by pages asc limit 1;
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver       |          1981 |             23 |   176 |
++---------+-----------------------------------------------------+--------------+--------------+---------------+----------------+-------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select author_fname,author_lname,min(released_year) from books group by author_lname,author_fname;
++--------------+----------------+--------------------+
+| author_fname | author_lname   | min(released_year) |
++--------------+----------------+--------------------+
+| Raymond      | Carver         |               1981 |
+| Michael      | Chabon         |               2000 |
+| Don          | DeLillo        |               1985 |
+| Dave         | Eggers         |               2001 |
+| David        | Foster Wallace |               2004 |
+| Neil         | Gaiman         |               2001 |
+| Dan          | Harris         |               2014 |
+| Freida       | Harris         |               2001 |
+| Jhumpa       | Lahiri         |               1996 |
+| George       | Saunders       |               2017 |
+| Patti        | Smith          |               2010 |
+| John         | Steinbeck      |               1945 |
++--------------+----------------+--------------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select author_fname,author_lname,max(pages) from books group by author_lname,author_fname;
++--------------+----------------+------------+
+| author_fname | author_lname   | max(pages) |
++--------------+----------------+------------+
+| Raymond      | Carver         |        526 |
+| Michael      | Chabon         |        634 |
+| Don          | DeLillo        |        320 |
+| Dave         | Eggers         |        504 |
+| David        | Foster Wallace |        343 |
+| Neil         | Gaiman         |        465 |
+| Dan          | Harris         |        256 |
+| Freida       | Harris         |        428 |
+| Jhumpa       | Lahiri         |        291 |
+| George       | Saunders       |        367 |
+| Patti        | Smith          |        304 |
+| John         | Steinbeck      |        181 |
++--------------+----------------+------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select concat(author_fname,' ',author_lname), as author max(pages) as 'longest book' from books group by author_lname,author_fname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'as author max(pages) as 'longest book' from books group by author_lname,author_f' at line 1
+MariaDB [table]> select concat(author_fname,' ',author_lname) as author max(pages) as 'longest book' from books group by author_lname,author_fname;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'max(pages) as 'longest book' from books group by author_lname,author_fname' at line 1
+MariaDB [table]> select concat(author_fname,' ',author_lname) as author, max(pages) as 'longest book' from books group by author_lname,author_fname;
++----------------------+--------------+
+| author               | longest book |
++----------------------+--------------+
+| Raymond Carver       |          526 |
+| Michael Chabon       |          634 |
+| Don DeLillo          |          320 |
+| Dave Eggers          |          504 |
+| David Foster Wallace |          343 |
+| Neil Gaiman          |          465 |
+| Dan Harris           |          256 |
+| Freida Harris        |          428 |
+| Jhumpa Lahiri        |          291 |
+| George Saunders      |          367 |
+| Patti Smith          |          304 |
+| John Steinbeck       |          181 |
++----------------------+--------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select sum(pages) from books;
++------------+
+| sum(pages) |
++------------+
+|       6623 |
++------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> SELECT author_fname,
+    ->        author_lname,
+    ->        Sum(pages)
+    -> FROM books
+    -> GROUP BY
+    ->     author_lname,
+    ->     author_fname;
++--------------+----------------+------------+
+| author_fname | author_lname   | Sum(pages) |
++--------------+----------------+------------+
+| Raymond      | Carver         |        702 |
+| Michael      | Chabon         |        634 |
+| Don          | DeLillo        |        320 |
+| Dave         | Eggers         |       1293 |
+| David        | Foster Wallace |        672 |
+| Neil         | Gaiman         |        977 |
+| Dan          | Harris         |        256 |
+| Freida       | Harris         |        428 |
+| Jhumpa       | Lahiri         |        489 |
+| George       | Saunders       |        367 |
+| Patti        | Smith          |        304 |
+| John         | Steinbeck      |        181 |
++--------------+----------------+------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select * from books;
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+| book_id | title                                               | author_fname | author_lname   | released_year | stock_quantity | pages |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+|       1 | The Namesake                                        | Jhumpa       | Lahiri         |          2003 |             32 |   291 |
+|       2 | Norse Mythology                                     | Neil         | Gaiman         |          2016 |             43 |   304 |
+|       3 | American Gods                                       | Neil         | Gaiman         |          2001 |             12 |   465 |
+|       4 | Interpreter of Maladies                             | Jhumpa       | Lahiri         |          1996 |             97 |   198 |
+|       5 | A Hologram for the King: A Novel                    | Dave         | Eggers         |          2012 |            154 |   352 |
+|       6 | The Circle                                          | Dave         | Eggers         |          2013 |             26 |   504 |
+|       7 | The Amazing Adventures of Kavalier & Clay           | Michael      | Chabon         |          2000 |             68 |   634 |
+|       8 | Just Kids                                           | Patti        | Smith          |          2010 |             55 |   304 |
+|       9 | A Heartbreaking Work of Staggering Genius           | Dave         | Eggers         |          2001 |            104 |   437 |
+|      10 | Coraline                                            | Neil         | Gaiman         |          2003 |            100 |   208 |
+|      11 | What We Talk About When We Talk About Love: Stories | Raymond      | Carver         |          1981 |             23 |   176 |
+|      12 | Where I'm Calling From: Selected Stories            | Raymond      | Carver         |          1989 |             12 |   526 |
+|      13 | White Noise                                         | Don          | DeLillo        |          1985 |             49 |   320 |
+|      14 | Cannery Row                                         | John         | Steinbeck      |          1945 |             95 |   181 |
+|      15 | Oblivion: Stories                                   | David        | Foster Wallace |          2004 |            172 |   329 |
+|      16 | Consider the Lobster                                | David        | Foster Wallace |          2005 |             92 |   343 |
+|      17 | 10% Happier                                         | Dan          | Harris         |          2014 |             29 |   256 |
+|      18 | fake_book                                           | Freida       | Harris         |          2001 |            287 |   428 |
+|      19 | Lincoln In The Bardo                                | George       | Saunders       |          2017 |           1000 |   367 |
++---------+-----------------------------------------------------+--------------+----------------+---------------+----------------+-------+
+19 rows in set (0.00 sec)
+
+MariaDB [table]> select avg(released_year) from books;
++--------------------+
+| avg(released_year) |
++--------------------+
+|          1999.7895 |
++--------------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select avg(stock_quantity) from books group by released_year;
++---------------------+
+| avg(stock_quantity) |
++---------------------+
+|             95.0000 |
+|             23.0000 |
+|             49.0000 |
+|             12.0000 |
+|             97.0000 |
+|             68.0000 |
+|            134.3333 |
+|             66.0000 |
+|            172.0000 |
+|             92.0000 |
+|             55.0000 |
+|            154.0000 |
+|             26.0000 |
+|             29.0000 |
+|             43.0000 |
+|           1000.0000 |
++---------------------+
+16 rows in set (0.00 sec)
+
+MariaDB [table]> select count(*) from books;
++----------+
+| count(*) |
++----------+
+|       19 |
++----------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> select count(*) from books group by released_year;
++----------+
+| count(*) |
++----------+
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        3 |
+|        2 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
+|        1 |
++----------+
+16 rows in set (0.00 sec)
+
+MariaDB [table]> select released_year,count(*) from books group by released_year;
++---------------+----------+
+| released_year | count(*) |
++---------------+----------+
+|          1945 |        1 |
+|          1981 |        1 |
+|          1985 |        1 |
+|          1989 |        1 |
+|          1996 |        1 |
+|          2000 |        1 |
+|          2001 |        3 |
+|          2003 |        2 |
+|          2004 |        1 |
+|          2005 |        1 |
+|          2010 |        1 |
+|          2012 |        1 |
+|          2013 |        1 |
+|          2014 |        1 |
+|          2016 |        1 |
+|          2017 |        1 |
++---------------+----------+
+16 rows in set (0.00 sec)
+
+MariaDB [table]> select stock_quantity,count(*) from books group by stock_quantity;
++----------------+----------+
+| stock_quantity | count(*) |
++----------------+----------+
+|             12 |        2 |
+|             23 |        1 |
+|             26 |        1 |
+|             29 |        1 |
+|             32 |        1 |
+|             43 |        1 |
+|             49 |        1 |
+|             55 |        1 |
+|             68 |        1 |
+|             92 |        1 |
+|             95 |        1 |
+|             97 |        1 |
+|            100 |        1 |
+|            104 |        1 |
+|            154 |        1 |
+|            172 |        1 |
+|            287 |        1 |
+|           1000 |        1 |
++----------------+----------+
+18 rows in set (0.00 sec)
+
+MariaDB [table]> select avg(released_year) from books group by author_fname,author_lname;
++--------------------+
+| avg(released_year) |
++--------------------+
+|          2014.0000 |
+|          2008.6667 |
+|          2004.5000 |
+|          1985.0000 |
+|          2001.0000 |
+|          2017.0000 |
+|          1999.5000 |
+|          1945.0000 |
+|          2000.0000 |
+|          2006.6667 |
+|          2010.0000 |
+|          1985.0000 |
++--------------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select author_fname,author_lname,avg(released_year) from books group by author_fname,author_lname;
++--------------+----------------+--------------------+
+| author_fname | author_lname   | avg(released_year) |
++--------------+----------------+--------------------+
+| Dan          | Harris         |          2014.0000 |
+| Dave         | Eggers         |          2008.6667 |
+| David        | Foster Wallace |          2004.5000 |
+| Don          | DeLillo        |          1985.0000 |
+| Freida       | Harris         |          2001.0000 |
+| George       | Saunders       |          2017.0000 |
+| Jhumpa       | Lahiri         |          1999.5000 |
+| John         | Steinbeck      |          1945.0000 |
+| Michael      | Chabon         |          2000.0000 |
+| Neil         | Gaiman         |          2006.6667 |
+| Patti        | Smith          |          2010.0000 |
+| Raymond      | Carver         |          1985.0000 |
++--------------+----------------+--------------------+
+12 rows in set (0.00 sec)
+
+MariaDB [table]> select concat(author_fname,' ',author_lname) as author from books where max(pages);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [table]> select concat(author_fname,' ',author_lname) as author from books where pages=max(pages);
+ERROR 1111 (HY000): Invalid use of group function
+MariaDB [table]> select concat(author_fname,' ',author_lname) as author from books where pages=(select max(pages) from books);
++----------------+
+| author         |
++----------------+
+| Michael Chabon |
++----------------+
+1 row in set (0.00 sec)
+
+MariaDB [table]> SELECT released_year,count(*),avg(pages) FROM books GROUP BY released_year;
++---------------+----------+------------+
+| released_year | count(*) | avg(pages) |
++---------------+----------+------------+
+|          1945 |        1 |   181.0000 |
+|          1981 |        1 |   176.0000 |
+|          1985 |        1 |   320.0000 |
+|          1989 |        1 |   526.0000 |
+|          1996 |        1 |   198.0000 |
+|          2000 |        1 |   634.0000 |
+|          2001 |        3 |   443.3333 |
+|          2003 |        2 |   249.5000 |
+|          2004 |        1 |   329.0000 |
+|          2005 |        1 |   343.0000 |
+|          2010 |        1 |   304.0000 |
+|          2012 |        1 |   352.0000 |
+|          2013 |        1 |   504.0000 |
+|          2014 |        1 |   256.0000 |
+|          2016 |        1 |   304.0000 |
+|          2017 |        1 |   367.0000 |
++---------------+----------+------------+
+16 rows in set (0.00 sec)
